@@ -1,10 +1,11 @@
 
+import { TodoList } from '../interfaces/interfaces'
 import Header from './Header'
 import Main from './Main'
 
 interface ContainerProps {
-    list: string[],
-    setList: (arg:string) => void
+    list: TodoList[],
+    setList: (arg:TodoList[]) => void
 }
 
 const Container = ({list, setList}: ContainerProps) => {

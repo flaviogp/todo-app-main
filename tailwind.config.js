@@ -33,7 +33,7 @@ export default {
       },
       content: {
         "check": "url(./assets/images/icon-check.svg)"
-      }
+      },
     },
   },
   plugins: [],
