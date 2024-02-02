@@ -1,4 +1,4 @@
-import { useState } from 'react'
+
 import CrossIcon from '../assets/images/icon-cross.svg'
 import { TodoList } from '../interfaces/interfaces'
 
@@ -30,13 +30,13 @@ const List = ({list, setList}: ListProps) => {
 
 
   return (
-    <ul className='container flex flex-col bg-very-light-gray rounded-md'>
+    <ul className='container flex flex-col bg-very-light-gray rounded-md [&>*:not(:first-child)]:border-t-2'>
     { list.length >= 1 && list.map((todo, index) => (
             <li 
                 key={`${todo.task}-${index}`}
-                className='flex w-full gap-5 bg-transparent border-t-2 h-[50px] items-center justify-between p-5'
+                className='flex w-full gap-5 bg-transparent h-[50px] items-center justify-between p-5'
             >
-                <label htmlFor={`item-${index}`} className='flex gap-5 cursor-pointer'>
+                <label htmlFor={`item-${index}`} className='flex gap-5 cursor-pointer w-full'>
                     <input 
                         type="checkbox" 
                         name={`item-${index}`} 
