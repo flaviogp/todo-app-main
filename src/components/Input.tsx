@@ -16,12 +16,10 @@ const Input = ({setList}: InputProps) => {
       const newTask = {id: 0, task:e.currentTarget.value, checked: false}
       localStorage.setItem('todoList', JSON.stringify([newTask]))
       setList([newTask])
-      console.log('n passou', newTask)
       return;
     }
     
     const oldList = JSON.parse(storedList)
-    console.log('passou', oldList)
     const lastId = oldList[oldList.length-1].id;
 
     const newTask = {id: lastId + 1 , task:e.currentTarget.value , checked: false}

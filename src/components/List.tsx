@@ -27,6 +27,15 @@ const List = ({list, setList}: ListProps) => {
         localStorage.setItem('todoList', JSON.stringify(newList))
 
     }
+
+    const handleClear = () => {
+        const incomplete = list.filter(task => task.checked === false)
+
+        setList([...incomplete])
+        localStorage.setItem('todoList', JSON.stringify(incomplete))
+        console.log(incomplete)
+    }
+
     const checkInputStyle = `
         after:flex after:justify-center 
         after:items-center
@@ -56,12 +65,16 @@ const List = ({list, setList}: ListProps) => {
                             after:left-0 after:rounded-full ${todo.checked && checkInputStyle}`}
                         onChange={()=> handleChekTodo(todo.id)}
                     />
-                    <p className={`${todo.checked && 'line-through text-light-grayish-blue'}`}>{todo.task}</p>
+                    <p className={`${todo.checked ? 'line-through text-light-grayish-blue' : ' text-very-dark-grayish-blue'}`}>{todo.task}</p>
                 </label>
                 <img src={CrossIcon} alt="remove todo" onClick={() => handleDelete(todo.id)} className='w-[17px] h-[17px] flex justify-self-end cursor-pointer'/>
             </li>
         ))
     }
+    <li className='flex justify-between p-5 text-dark-grayish-blue'>
+        <p >{`${list.length} items left`}</p>
+        <p className='cursor-pointer' onClick={() => handleClear()}>Clear Completed</p>
+    </li>
     </ul>
   )
 }
