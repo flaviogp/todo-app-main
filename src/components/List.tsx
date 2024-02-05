@@ -10,12 +10,21 @@ interface ListProps {
 
 const List = ({list, setList}: ListProps) => {
 
+    const handleDelete = (id: number) => {
+        const newList = [...list]
+        const taskIndex = newList.findIndex(task => task.id === id);
+        newList.splice(taskIndex, 1)
+        localStorage.setItem('todoList', JSON.stringify(newList))
+        setList(newList)
+    }
+
     const handleChekTodo = (id: number) => {
         const newList = [...list]
         const taskIndex = newList.findIndex(task => task.id === id);
         const newTask = {...newList[taskIndex], checked: !newList[taskIndex].checked}
         newList[taskIndex] = newTask
         setList([...newList])
+        localStorage.setItem('todoList', JSON.stringify(newList))
 
     }
     const checkInputStyle = `
@@ -49,7 +58,7 @@ const List = ({list, setList}: ListProps) => {
                     />
                     <p className={`${todo.checked && 'line-through text-light-grayish-blue'}`}>{todo.task}</p>
                 </label>
-                <img src={CrossIcon} alt="remove todo"  className='w-[17px] h-[17px] flex justify-self-end cursor-pointer'/>
+                <img src={CrossIcon} alt="remove todo" onClick={() => handleDelete(todo.id)} className='w-[17px] h-[17px] flex justify-self-end cursor-pointer'/>
             </li>
         ))
     }

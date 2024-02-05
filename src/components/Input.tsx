@@ -12,8 +12,8 @@ const Input = ({setList}: InputProps) => {
     if(e.key !== 'Enter') return;
     const storedList = localStorage.getItem('todoList')
     
-    if(!storedList) {
-      const newTask = {id: 0, task:e.currentTarget.value , checked: false}
+    if(!storedList || storedList.length < 1) {
+      const newTask = {id: 0, task:e.currentTarget.value, checked: false}
       localStorage.setItem('todoList', JSON.stringify([newTask]))
       setList([newTask])
       return;
@@ -31,16 +31,6 @@ const Input = ({setList}: InputProps) => {
 
   }
 
-  // useEffect(()=>{
-  //   const storedList = JSON.parse(localStorage.getItem('todoList'))
-
-  //   if(!storedList) return;
-
-  //   const newList = [...storedList, task]
-
-  //   localStorage.setItem('todoList', JSON.stringify(newList))
-
-  // },[setTask, task])
 
   return (
     <label htmlFor="todo" className="flex items-center w-full h-[50px] px-5 gap-5 bg-very-light-gray rounded-md">
