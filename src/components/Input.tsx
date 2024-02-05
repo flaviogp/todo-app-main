@@ -12,17 +12,19 @@ const Input = ({setList}: InputProps) => {
     if(e.key !== 'Enter') return;
     const storedList = localStorage.getItem('todoList')
     
-    if(!storedList || storedList.length < 1) {
+    if(!storedList || JSON.parse(storedList).length === 0) {
       const newTask = {id: 0, task:e.currentTarget.value, checked: false}
       localStorage.setItem('todoList', JSON.stringify([newTask]))
       setList([newTask])
+      console.log('n passou', newTask)
       return;
     }
     
     const oldList = JSON.parse(storedList)
-    const lastId = oldList[oldList.length -1].id;
+    console.log('passou', oldList)
+    const lastId = oldList[oldList.length-1].id;
 
-    const newTask = {id: lastId + 1, task:e.currentTarget.value , checked: false}
+    const newTask = {id: lastId + 1 , task:e.currentTarget.value , checked: false}
 
     localStorage.setItem('todoList', JSON.stringify([...oldList, newTask]))
     setList([...oldList, newTask])
