@@ -9,6 +9,7 @@ const Input = ({setList}: InputProps) => {
 
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if(!e.currentTarget.value) return;
     if(e.key !== 'Enter') return;
     const storedList = localStorage.getItem('todoList')
     
@@ -27,7 +28,7 @@ const Input = ({setList}: InputProps) => {
     localStorage.setItem('todoList', JSON.stringify([...oldList, newTask]))
     setList([...oldList, newTask])
 
-
+    e.currentTarget.value = ''
 
   }
 
