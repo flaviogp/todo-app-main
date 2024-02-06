@@ -13,4 +13,21 @@
   body {
     font-size: 18px;
   }
+  .scroll::-webkit-scrollbar {
+    width: 5px;
+}
+
+.scroll::-webkit-scrollbar-track {
+    background: hsl(0, 0%, 98%);
+    border-radius: 5px;
+  }
+  
+  .scroll::-webkit-scrollbar-thumb {
+  background: hsl(236, 9%, 61%);
+    border-radius: 5px;
+}
+ 
+.scroll::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
 }
