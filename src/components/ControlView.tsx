@@ -41,7 +41,7 @@ const ControlView = ({setList}: ControlViewProps) => {
 
 
   return (
-    <div className="w-full p-5 bg-very-light-gray rounded-md">
+    <div className="w-full p-5 bg-very-light-gray rounded-md absolute bottom-8">
       <ul 
         className={` 
           [&>*]:cursor-pointer

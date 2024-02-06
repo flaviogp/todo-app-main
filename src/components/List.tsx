@@ -10,30 +10,37 @@ interface ListProps {
 
 const List = ({list, setList}: ListProps) => {
 
+    const getStoredList = () => {
+        const stored = localStorage.getItem('todoList')
+        if(!stored) return [];
+        return JSON.parse(stored) as TodoList[]
+    }
+
     const handleDelete = (id: number) => {
-        const newList = [...list]
+        const newList = getStoredList()
         const taskIndex = newList.findIndex(task => task.id === id);
         newList.splice(taskIndex, 1)
         localStorage.setItem('todoList', JSON.stringify(newList))
         setList(newList)
     }
-
+    
     const handleChekTodo = (id: number) => {
-        const newList = [...list]
+        const newList = getStoredList()
         const taskIndex = newList.findIndex(task => task.id === id);
         const newTask = {...newList[taskIndex], checked: !newList[taskIndex].checked}
         newList[taskIndex] = newTask
         setList([...newList])
         localStorage.setItem('todoList', JSON.stringify(newList))
-
+        
     }
-
+    
     const handleClear = () => {
-        const incomplete = list.filter(task => task.checked === false)
+        const newList = getStoredList()
+        const incomplete = newList.filter(task => task.checked === false)
 
-        setList([...incomplete])
         localStorage.setItem('todoList', JSON.stringify(incomplete))
-        console.log(incomplete)
+        setList(incomplete)
+        
     }
 
     const checkInputStyle = `
