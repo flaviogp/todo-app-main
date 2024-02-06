@@ -1,5 +1,6 @@
 
 import { TodoList } from '../interfaces/interfaces'
+import ControlView from './ControlView'
 import Input from './Input'
 import List from './List'
 
@@ -13,6 +14,7 @@ const Main = ({list, setList}: MainProps) => {
     <main className="container max-w-[600px] w-full flex flex-col gap-5 ">
         <Input setList={setList}/>
         <List list={list} setList={setList}/>
+        <ControlView setList={setList}/>
     </main>
   )
 }

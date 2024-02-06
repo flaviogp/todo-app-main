@@ -1,5 +1,4 @@
 
-import { Fragment } from 'react'
 import CrossIcon from '../assets/images/icon-cross.svg'
 import { TodoList } from '../interfaces/interfaces'
 
