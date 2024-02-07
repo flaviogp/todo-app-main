@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { TodoList } from '../interfaces/interfaces'
 
 interface InputProps {
@@ -6,7 +6,17 @@ interface InputProps {
 }
 
 const Input = ({setList}: InputProps) => {
+  const [checkFull, setCheckFull] = useState(false)
 
+  const checkInputStyle = `
+  after:flex after:justify-center 
+  after:items-center
+  after:content-check 
+  after:bg-gradient-to-b 
+  after:from-checkbackground-gradient-top 
+  after:to-checkbackground-gradient-bottom
+  after:border-none
+`
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if(!e.currentTarget.value) return;
@@ -32,10 +42,29 @@ const Input = ({setList}: InputProps) => {
 
   }
 
+  const handleClick = () => {
+    const stored = localStorage.getItem('todoList')
+    if (!stored) return;
+    const list = JSON.parse(stored) as TodoList[]
+    list.map(task => task.checked = !checkFull ? true : false)
+    localStorage.setItem('todoList', JSON.stringify(list))
+    setCheckFull(!checkFull)
+    setList(list)
+  }
+
 
   return (
     <label htmlFor="todo" className="flex items-center w-full h-[50px] px-5 gap-5 bg-very-light-gray rounded-md">
-        <div className='w-[20px] h-[20px] rounded-full border'></div>
+        <div 
+        className={`
+          relative
+          w-[20px] h-[20px] rounded-full cursor-pointer
+          after:w-[20px] after:h-[20px] after:border-2
+          after:absolute after:top-0
+          after:left-0 after:rounded-full
+          ${checkFull && checkInputStyle}
+          `}
+         onClick={() => handleClick()}></div>
         <input type="text" name="todo" id="todo" className='outline-none bg-transparent w-[90%]' placeholder='Create a new todo...'
           onKeyDown={e => handleKeyDown(e)}
         />
