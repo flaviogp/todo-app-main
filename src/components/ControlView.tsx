@@ -3,9 +3,10 @@ import { TodoList } from "../interfaces/interfaces"
 
 interface ControlViewProps {
   setList: (arg: TodoList[]) => void
+  mode: string
 }
 
-const ControlView = ({setList}: ControlViewProps) => {
+const ControlView = ({setList, mode}: ControlViewProps) => {
   const [focus, setFocus] = useState('all')
 
   const listFocus = (id: string) => {
@@ -41,12 +42,21 @@ const ControlView = ({setList}: ControlViewProps) => {
 
 
   return (
-    <div className="w-full p-5 bg-very-light-gray rounded-md absolute bottom-8">
+    <div className={`
+        w-full p-5 rounded-md absolute bottom-8
+        ${mode === 'light' ? 'bg-very-light-gray' : 'bg-very-dark-desaturated-blue'}
+      `}
+    >
       <ul 
         className={` 
           [&>*]:cursor-pointer
-           w-full flex justify-center
-          gap-5 text-very-dark-grayish-blue
+           w-full flex justify-center gap-5 
+          ${
+            mode == 'light' ?
+            'text-very-dark-grayish-blue' :
+            'text-dark-grayish-blue'
+          }
+
 
         `}>
 

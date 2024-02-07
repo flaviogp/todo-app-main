@@ -3,9 +3,10 @@ import { TodoList } from '../interfaces/interfaces'
 
 interface InputProps {
   setList: (arg:TodoList[]) => void
+  mode: string;
 }
 
-const Input = ({setList}: InputProps) => {
+const Input = ({setList, mode}: InputProps) => {
   const [checkFull, setCheckFull] = useState(false)
 
   const checkInputStyle = `
@@ -54,7 +55,7 @@ const Input = ({setList}: InputProps) => {
 
 
   return (
-    <label htmlFor="todo" className="flex items-center w-full h-[50px] px-5 gap-5 bg-very-light-gray rounded-md">
+    <label htmlFor="todo" className={`flex items-center w-full h-[50px] px-5 gap-5 rounded-md ${mode === 'light' ? 'bg-very-light-gray' : 'bg-very-dark-desaturated-blue'}`}>
         <div 
         className={`
           relative
@@ -65,7 +66,7 @@ const Input = ({setList}: InputProps) => {
           ${checkFull && checkInputStyle}
           `}
          onClick={() => handleClick()}></div>
-        <input type="text" name="todo" id="todo" className='outline-none bg-transparent w-[90%]' placeholder='Create a new todo...'
+        <input type="text" name="todo" id="todo" className={`outline-none bg-transparent w-[90%] ${mode === 'light' ? 'text-very-dark-desaturated-blue' : 'text-dark-grayish-blue'}`} placeholder='Create a new todo...'
           onKeyDown={e => handleKeyDown(e)}
         />
     </label>

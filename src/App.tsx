@@ -6,7 +6,7 @@ import { TodoList } from "./interfaces/interfaces"
 function App() {
 
   const [list, setList] = useState<TodoList[]>([])
-
+  const [mode, setMode] = useState('light');
 
 
   useEffect(()=> {
@@ -19,8 +19,8 @@ function App() {
 
 
   return (
-    <div className="w-[100vw] h-[100vh] bg-very-light-grayish-blue bg-background-light-mobile bg-no-repeat bg-contain flex justify-center pt-12">
-      <Container list={list} setList={setList} />
+    <div className={`w-[100vw] h-[100vh]  bg-no-repeat bg-contain flex justify-center pt-12 ${mode === 'light' ? 'bg-background-light-mobile bg-very-light-grayish-blue' : 'bg-background-dark-mobile bg-very-dark-blue'}`}>
+      <Container list={list} setList={setList} setMode={setMode} mode={mode}/>
     </div>
   )
 }

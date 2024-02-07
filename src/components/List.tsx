@@ -6,9 +6,10 @@ import { TodoList } from '../interfaces/interfaces'
 interface ListProps {
     list: TodoList[],
     setList: (arg:TodoList[]) => void
+    mode: string;
 }
 
-const List = ({list, setList}: ListProps) => {
+const List = ({list, setList, mode}: ListProps) => {
 
     const getStoredList = () => {
         const stored = localStorage.getItem('todoList')
@@ -53,16 +54,23 @@ const List = ({list, setList}: ListProps) => {
         after:border-none
     `
 
-
   return (
-    <ul className='
+    <ul className={`
         max-h-[320px]
         container flex flex-col 
-        bg-very-light-gray rounded-md 
-        '>
+        ${mode === 'light' ? 
+            'bg-very-light-gray' : 
+            'bg-very-dark-desaturated-blue'
+        }
+        rounded-md 
+        `}>
 
-        <div className='scroll max-h-[280px] overflow-y-auto 
-        [&>*:not(:first-child)]:border-t-2'>
+        <div className='
+            scroll max-h-[280px] overflow-y-auto
+            [&>*:not(:first-child)]:border-t-[1px]
+            [&>*:not(:first-child)]:border-light-grayish-blue-themeDark 
+            '
+        >
             { list.length >= 1 && list.map((todo, index) => (
                     <li 
                         key={`${todo.task}-${index}`}
@@ -79,7 +87,23 @@ const List = ({list, setList}: ListProps) => {
                                     after:left-0 after:rounded-full ${todo.checked && checkInputStyle}`}
                                 onChange={()=> handleChekTodo(todo.id)}
                             />
-                            <p className={`${todo.checked ? 'line-through text-light-grayish-blue' : ' text-very-dark-grayish-blue'}`}>{todo.task}</p>
+                            <p 
+                            className={`
+                                ${todo.checked ? 
+                                    `${
+                                        mode == 'light' ? 
+                                        'line-through text-light-grayish-blue' :
+                                        'line-through text-very-dark-grayish-blue'                                    
+                                    }`
+                                    : 
+                                    `${
+                                        mode == 'light' ? 
+                                        'text-very-dark-grayish-blue' :
+                                        'text-light-grayish-blue-themeDark'                                    
+                                    }`
+                                }
+                                `}
+                            >{todo.task}</p>
                         </label>
                         <img src={CrossIcon} alt="remove todo" onClick={() => handleDelete(todo.id)} className='w-[17px] h-[17px] flex justify-self-end cursor-pointer'/>
                     </li>
@@ -88,7 +112,7 @@ const List = ({list, setList}: ListProps) => {
             }
         </div>
     {  list.length >= 1 ?
-            <li className='flex justify-between p-5 text-dark-grayish-blue'>
+            <li className='flex justify-between p-5 text-dark-grayish-blue border-t-[1px] border-light-grayish-blue-themeDark'>
                 <p >{`${list.length} items left`}</p>
                 <p className='cursor-pointer' onClick={() => handleClear()}>Clear Completed</p>
             </li>
