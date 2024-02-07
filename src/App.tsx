@@ -19,7 +19,7 @@ function App() {
 
 
   return (
-    <div className={`w-[100vw] h-[100vh]  bg-no-repeat bg-contain flex justify-center pt-12 ${mode === 'light' ? 'bg-background-light-mobile bg-very-light-grayish-blue' : 'bg-background-dark-mobile bg-very-dark-blue'}`}>
+    <div className={`w-[100vw] h-[100vh]  bg-no-repeat bg-contain  flex justify-center pt-12 ${mode === 'light' ? 'bg-background-light-mobile md:bg-background-light-desktop bg-very-light-grayish-blue' : 'bg-background-dark-mobile md:bg-background-dark-desktop bg-very-dark-blue'}`}>
       <Container list={list} setList={setList} setMode={setMode} mode={mode}/>
     </div>
   )

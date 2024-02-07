@@ -14,7 +14,7 @@ const Container = ({list, setList, setMode, mode}: ContainerProps) => {
   return (
     <div className="container max-w-[600px] w-[90%] h-full flex flex-col gap-5">
         <Header setMode={setMode} mode={mode}/>
-        <Main list={list} setList={setList} setMode={setMode} mode={mode} />
+        <Main list={list} setList={setList} mode={mode} />
     </div>
   )
 }
