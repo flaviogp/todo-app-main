@@ -1,15 +1,19 @@
 
-import CrossIcon from '../assets/images/icon-cross.svg'
 import { TodoList } from '../interfaces/interfaces'
+import Todo from './Todo';
 
 
 interface ListProps {
     list: TodoList[],
     setList: (arg:TodoList[]) => void
     mode: string;
+    focus: string;
 }
 
-const List = ({list, setList, mode}: ListProps) => {
+const List = ({list, setList, mode, focus}: ListProps) => {
+    const listAll = [...list];
+    const listActive = list.filter(todo => todo.checked === false)
+    const listCompleted = list.filter(todo => todo.checked === true)
 
     const getStoredList = () => {
         const stored = localStorage.getItem('todoList')
@@ -44,16 +48,6 @@ const List = ({list, setList, mode}: ListProps) => {
         
     }
 
-    const checkInputStyle = `
-        after:flex after:justify-center 
-        after:items-center
-        after:content-check 
-        after:bg-gradient-to-b 
-        after:from-checkbackground-gradient-top 
-        after:to-checkbackground-gradient-bottom
-        after:border-none
-    `
-
   return (
     <ul className={`
         max-h-[320px]
@@ -65,61 +59,83 @@ const List = ({list, setList, mode}: ListProps) => {
         rounded-md 
         `}>
 
-        <div className='
+        <li className='
             scroll max-h-[280px] overflow-y-auto
             [&>*:not(:first-child)]:border-t-[1px]
             [&>*:not(:first-child)]:border-light-grayish-blue-themeDark 
             '
         >
-            { list.length >= 1 && list.map((todo, index) => (
-                    <li 
-                        key={`${todo.task}-${index}`}
-                        className='flex w-full gap-5 bg-transparent h-[50px] items-center justify-between p-5'
-                    >
-                        <label htmlFor={`item-${index}`} className='flex gap-5 cursor-pointer w-full'>
-                            <input 
-                                type="checkbox" 
-                                name={`item-${index}`} 
-                                id={`item-${index}`} 
-                                className={`relative appearance-none mr-[10px]
-                                    after:w-[20px] after:h-[20px] after:border-2
-                                    after:absolute after:top-[2px] cursor-pointer
-                                    after:left-0 after:rounded-full ${todo.checked && checkInputStyle}`}
-                                onChange={()=> handleChekTodo(todo.id)}
-                            />
-                            <p 
-                            className={`
-                                ${todo.checked ? 
-                                    `${
-                                        mode == 'light' ? 
-                                        'line-through text-light-grayish-blue' :
-                                        'line-through text-very-dark-grayish-blue'                                    
-                                    }`
-                                    : 
-                                    `${
-                                        mode == 'light' ? 
-                                        'text-very-dark-grayish-blue' :
-                                        'text-light-grayish-blue-themeDark'                                    
-                                    }`
-                                }
-                                `}
-                            >{todo.task}</p>
-                        </label>
-                        <img src={CrossIcon} alt="remove todo" onClick={() => handleDelete(todo.id)} className='w-[17px] h-[17px] flex justify-self-end cursor-pointer'/>
-                    </li>
+            {
+                focus === 'all' && listAll.map((todo, index) => (
                 
-                ))
+                    <Todo 
+                        todo={todo} 
+                        index={index} 
+                        mode={mode} 
+                        handleChekTodo={handleChekTodo} 
+                        handleDelete={handleDelete}
+                        />
+                   ))
             }
-        </div>
-    {  list.length >= 1 ?
-            <li className='flex justify-between p-5 text-dark-grayish-blue border-t-[1px] border-light-grayish-blue-themeDark'>
-                <p >{`${list.length} items left`}</p>
-                <p className='cursor-pointer' onClick={() => handleClear()}>Clear Completed</p>
-            </li>
-        :
-            <li className='flex justify-center p-5 text-dark-grayish-blue'>
-                <p>No more Tasks</p>
-            </li>
+            {
+                focus === 'active' && listActive.map((todo, index) => (
+                
+                    <Todo 
+                        todo={todo} 
+                        index={index} 
+                        mode={mode} 
+                        handleChekTodo={handleChekTodo} 
+                        handleDelete={handleDelete}
+                        />
+                   ))
+            }
+            {
+                focus === 'completed' && listCompleted.map((todo, index) => (
+                
+                    <Todo 
+                        todo={todo} 
+                        index={index} 
+                        mode={mode} 
+                        handleChekTodo={handleChekTodo} 
+                        handleDelete={handleDelete}
+                        />
+                   ))
+            }
+
+        </li>
+    {  
+    
+        focus === 'all' ?
+            listAll.length >= 1 ?
+                <li className='flex justify-between p-5 text-dark-grayish-blue border-t-[1px] border-light-grayish-blue-themeDark'>
+                    <p >{`${listAll.length} items left`}</p>
+                    <p className='cursor-pointer' onClick={() => handleClear()}>Clear Completed</p>
+                </li>
+            :
+                <li className='flex justify-center p-5 text-dark-grayish-blue'>
+                    <p>No more Tasks</p>
+                </li>
+        : focus === 'active' ?
+            listActive.length >= 1 ?
+                <li className='flex justify-between p-5 text-dark-grayish-blue border-t-[1px] border-light-grayish-blue-themeDark'>
+                    <p >{`${listActive.length} items left`}</p>
+                    <p className='cursor-pointer' onClick={() => handleClear()}>Clear Completed</p>
+                </li>
+            :
+                <li className='flex justify-center p-5 text-dark-grayish-blue'>
+                    <p>No More Active Tasks</p>
+                </li>
+        : focus === 'completed' &&
+            listCompleted.length >= 1 ?
+                <li className='flex justify-between p-5 text-dark-grayish-blue border-t-[1px] border-light-grayish-blue-themeDark'>
+                    <p >{`${listCompleted.length} items left`}</p>
+                    <p className='cursor-pointer' onClick={() => handleClear()}>Clear Completed</p>
+                </li>
+            :
+                <li className='flex justify-center p-5 text-dark-grayish-blue'>
+                    <p>No More Completed Tasks</p>
+                </li>
+
     }
     </ul>
   )

@@ -1,13 +1,14 @@
-import { useState } from "react"
+// import { useEffect, useState } from "react"
 import { TodoList } from "../interfaces/interfaces"
 
 interface ControlViewProps {
   setList: (arg: TodoList[]) => void
   mode: string
+  setFocus: (arg: string) => void
+  focus: string
 }
 
-const ControlView = ({setList, mode}: ControlViewProps) => {
-  const [focus, setFocus] = useState('all')
+const ControlView = ({setList, mode, focus, setFocus}: ControlViewProps) => {
 
   const listFocus = (id: string) => {
     const stored = localStorage.getItem('todoList');
@@ -33,13 +34,13 @@ const ControlView = ({setList, mode}: ControlViewProps) => {
     }
   }
 
+
   const handleClick = (e:  React.MouseEvent<HTMLLIElement, MouseEvent>) => {
     const id = e.currentTarget.id;
     setFocus(id);
 
     listFocus(id);
   }
-
 
   return (
     <div className={`
@@ -64,13 +65,13 @@ const ControlView = ({setList, mode}: ControlViewProps) => {
           className={`${focus === 'all' && 'text-blue-700'}`}
           onClick={(e) => handleClick(e)}
           >
-          All
+            All
         </li>
         <li id="active" 
           className={`${focus === 'active' && 'text-blue-700'}`}
           onClick={(e) => handleClick(e)}
           >
-          Active
+            Active
         </li>
         <li id="completed" 
           className={`${focus === 'completed' && 'text-blue-700'}`}

@@ -1,4 +1,5 @@
 
+import { useState } from 'react'
 import { TodoList } from '../interfaces/interfaces'
 import ControlView from './ControlView'
 import Input from './Input'
@@ -11,11 +12,14 @@ interface MainProps {
 }
 
 const Main = ({list, setList, mode}: MainProps) => {
+
+  const [focus, setFocus] = useState('all')
+
   return (
     <main className="relative container h-full max-w-[600px] w-full flex flex-col gap-5 ">
-        <Input setList={setList} mode={mode}/>
-        <List list={list} setList={setList} mode={mode}/>
-        <ControlView setList={setList} mode={mode}/>
+        <Input setList={setList} mode={mode} />
+        <List list={list} setList={setList} mode={mode} focus={focus}/>
+        <ControlView setList={setList} mode={mode} focus={focus} setFocus={setFocus}/>
     </main>
   )
 }
